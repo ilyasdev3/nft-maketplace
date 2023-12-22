@@ -1,0 +1,10 @@
+.bg-gradient-black-gray {
+  background: linear-gradient(to left, #03010b, #0d0a18, #2c2222);
+}
+
+.bg-gradient-black-blue {
+  background: linear-gradient(to bottom, #000000, #0000ff);
+}
+.linear-purples {
+  background: linear-gradient(to bottom, #000000, #0000ff);
+}

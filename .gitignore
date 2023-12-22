@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+./frontend/.env
+./frontend/.node_modules
+./frontend/.dist
+./frontend/.dist-ssr
+./frontend/.yarn.lock
+./frontend/.yarn-error.log
+./frontend/.pnpm-lock.yaml
+

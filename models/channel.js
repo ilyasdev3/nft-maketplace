@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "ownerId",
         as: "owner",
       });
-      Channel.hasMany(models.NFT, {
+      Channel.hasMany(models.Nft, {
         foreignKey: "channelId",
         as: "nfts",
       });

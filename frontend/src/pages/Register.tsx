@@ -1,8 +1,83 @@
 import React from "react";
 import Header from "../components/reuseable/Header";
 import Dashboard from "../components/Dashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../redux-store/store";
+import { messageCleanUp, registerUser } from "../redux-store/auth/auth.slice";
+import { selectAuthMessage } from "../redux-store/auth/auth.seletor";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const disptach = useDispatch<AppDispatch>();
+  const message = useSelector(selectAuthMessage);
+
+  const [userCredentials, setUserCredentials] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  // handleChange function
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
+  };
+
+  // handleSubmit function
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    disptach(messageCleanUp());
+    disptach(registerUser(userCredentials));
+  };
+
+  React.useEffect(() => {
+    if (message === "User created successfully") {
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+    } else if (message === "Email already exists") {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+    } else if (message === "Something went wrong") {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+    } else if (message === "Please fill all the fields") {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+    } else if (message === "Internal server error") {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+    } else {
+      return;
+    }
+  }, [message]);
+
+  React.useEffect(() => {
+    return () => {
+      disptach(messageCleanUp());
+    };
+  }, []);
+
   return (
     <Dashboard>
       <Header />
@@ -13,7 +88,7 @@ const Register = () => {
               Register an account
             </h2>
           </div>
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-[10px]">
               <div>
                 <label htmlFor="firstName" className="sr-only">
@@ -27,6 +102,7 @@ const Register = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="First Name"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -41,6 +117,7 @@ const Register = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Last Name"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -55,6 +132,7 @@ const Register = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -69,6 +147,7 @@ const Register = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  onChange={handleChange}
                 />
               </div>
             </div>

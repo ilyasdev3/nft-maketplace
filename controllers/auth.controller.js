@@ -29,7 +29,9 @@ module.exports = {
         password: hashPass,
       });
 
-      return res.status(STATUS.CREATED).json(user);
+      return res
+        .status(STATUS.CREATED)
+        .json({ message: "User created successfully" });
     } catch (err) {
       return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
         message: "Internal server error",
@@ -64,7 +66,9 @@ module.exports = {
       };
 
       const token = await generateToken(userForToken);
-      return res.status(STATUS.SUCCESS).json({ token, authState: "logedin" });
+      return res
+        .status(STATUS.SUCCESS)
+        .json({ token, authState: "logedin", message: "Login successfully" });
     } catch (err) {
       return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
         message: "Internal server error",

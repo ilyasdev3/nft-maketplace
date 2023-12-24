@@ -1,10 +1,11 @@
-const User = require("../models/user");
+const models = require("../models");
+const User = models.User;
 
 module.exports = {
   createUser: async (user) => {
     try {
-      const user = await User.create(user);
-      return user;
+      const create = await User.create(user);
+      return create;
     } catch (error) {
       throw error;
     }

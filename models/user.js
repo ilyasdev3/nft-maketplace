@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasOne(models.Channel, {
+        foreignKey: "ownerId",
+        as: "channel",
+      });
     }
   }
   User.init(
@@ -24,10 +27,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      role: {
-        type: DataTypes.ENUM("admin", "user", "seller"),
-        defaultValue: "user",
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      isSeller: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      passwordResetSecret: DataTypes.STRING,
+      profilePicture: DataTypes.STRING,
+      coverPicture: DataTypes.STRING,
+      bio: DataTypes.STRING,
     },
     {
       sequelize,

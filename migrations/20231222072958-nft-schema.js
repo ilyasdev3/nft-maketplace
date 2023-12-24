@@ -2,52 +2,41 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Nfts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
-        type: Sequelize.STRING,
+      channelId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Channels",
+          key: "id",
+        },
       },
-      lastName: {
-        type: Sequelize.STRING,
+      categoryId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
       },
-      email: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      passwordResetSecret: {
-        type: Sequelize.STRING,
-      },
-      profilePicture: {
-        type: Sequelize.STRING,
-      },
-      coverPicture: {
-        type: Sequelize.STRING,
-      },
-      bio: {
-        type: Sequelize.STRING,
-      },
-      isSeller: {
+      description: Sequelize.STRING,
+      image: Sequelize.STRING,
+      price: Sequelize.FLOAT,
+      isSold: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
-      isVerified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -61,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Nfts");
   },
 };
